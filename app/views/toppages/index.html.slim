@@ -1,76 +1,77 @@
-- if logged_in?
-  .col-lg-10.offset-lg-1
-    .row
-      = render 'layouts/staff_aside'
-      .col-lg-10
-        h1
-          | 管理画面
-        .top
-          .center.jumbotron
-            .text-center.mb-5
-              h1.mb-3
-                | ようこそ 管理者画面へ
-        
-- else
-  .top
-    .center.jumbotron
-      .text-center.mb-5
-        h1.mb-3
-          | ようこそ テストショップへ
-        - unless logged_in_customer?
-          .btn-group
-            = link_to '会員登録', new_customer_path, class: 'btn btn-outline-primary'
-            = link_to 'ログイン', login_path, class: 'btn btn-outline-success'
-    .top_body.mb-5
-      .row.icon
-        .col-sm-4.mb-3
-          = icon('fa', 'sign-in-alt')
-          h4.mt-3
-            | 会員登録&amp;ログイン
-          p
-            | 商品を購入するには会員登録・ログインしてください。
-        .col-sm-4.mb-3
-          = icon('fas', 'shopping-cart')
-          h4.mt-3
-            | 購入
-          p
-            | 気に入った商品をカートに入れて、購入。
-        .col-sm-4.mb-3
-          = icon('fas', 'heart')
-          = icon('fa', 'plus')
-          = icon('fas', 'star')
-          h4.mt-3
-            | お気に入り&amp;星レビュー
-          p
-            | 気に入った商品をお気に入り登録
-            br
-            | 自分で評価・レビュー
-
-  .col-lg-10.offset-lg-1
-    = icon('far', 'step-forward')
-    h2
-      | PickUp
-    - if @products.any?
-      .card-columns
-        - @products.each do |product|
-          .card.p-3.shadow-sm
-            = link_to shop_product_path(product) do
-              - if !product.status || product.stock.quantity == 0
-                .sold
-                  .sold-inner
-                    | SOLD
-              - if product.image?
-                = image_tag product.image.url, size: "318x180", class: 'card-img-top'
-              - else
-                #no-img
-                  .no-img_text
-                    | 商品画像無し
-            .card-body
-              h4.card-title
-                = product.name
-              p.card-text
-                .row
-                  .col-lg-7
-                    | ¥ #{comma_price(price_tax(product.price))} （税込）
-                  .col-lg-3.offset-lg-2 id="favorite-#{product.id}"
-                    = render 'favorites/favorite_button', product: product
+- if current_staff
+  - if logged_in?
+    .col-lg-10.offset-lg-1
+      .row
+        = render 'layouts/staff_aside'
+        .col-lg-10
+          h1
+            | 管理画面
+          .top
+            .center.jumbotron
+              .text-center.mb-5
+                h1.mb-3
+                  | ようこそ 管理者画面へ
+          
+  - else
+    .top
+      .center.jumbotron
+        .text-center.mb-5
+          h1.mb-3
+            | ようこそ テストショップへ
+          - unless logged_in_customer?
+            .btn-group
+              = link_to '会員登録', new_customer_path, class: 'btn btn-outline-primary'
+              = link_to 'ログイン', login_path, class: 'btn btn-outline-success'
+      .top_body.mb-5
+        .row.icon
+          .col-sm-4.mb-3
+            = icon('fa', 'sign-in-alt')
+            h4.mt-3
+              | 会員登録&amp;ログイン
+            p
+              | 商品を購入するには会員登録・ログインしてください。
+          .col-sm-4.mb-3
+            = icon('fas', 'shopping-cart')
+            h4.mt-3
+              | 購入
+            p
+              | 気に入った商品をカートに入れて、購入。
+          .col-sm-4.mb-3
+            = icon('fas', 'heart')
+            = icon('fa', 'plus')
+            = icon('fas', 'star')
+            h4.mt-3
+              | お気に入り&amp;星レビュー
+            p
+              | 気に入った商品をお気に入り登録
+              br
+              | 自分で評価・レビュー
+  
+    .col-lg-10.offset-lg-1
+      = icon('far', 'step-forward')
+      h2
+        | PickUp
+      - if @products.any?
+        .card-columns
+          - @products.each do |product|
+            .card.p-3.shadow-sm
+              = link_to shop_product_path(product) do
+                - if !product.status || product.stock.quantity == 0
+                  .sold
+                    .sold-inner
+                      | SOLD
+                - if product.image?
+                  = image_tag product.image.url, size: "318x180", class: 'card-img-top'
+                - else
+                  #no-img
+                    .no-img_text
+                      | 商品画像無し
+              .card-body
+                h4.card-title
+                  = product.name
+                p.card-text
+                  .row
+                    .col-lg-7
+                      | ¥ #{comma_price(price_tax(product.price))} （税込）
+                    .col-lg-3.offset-lg-2 id="favorite-#{product.id}"
+                      = render 'favorites/favorite_button', product: product
