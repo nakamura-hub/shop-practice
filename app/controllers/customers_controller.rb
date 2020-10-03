@@ -26,15 +26,6 @@ class CustomersController < ApplicationController
   end
 
   def edit
-    # # DateTime.parse(@customer.born)
-    # # 2020-01-01
-    
-    # # year  = @customer.born[0..3]
-    # # month = @customer.born[5..6]
-    # # date  = @customer.born[8..10]
-    # # @customer.born = year + month + date
-    # @customer.born.to_date
-    # logger.debug "日付: #{@customer.born}"
   end
 
   def update

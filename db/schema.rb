@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_03_082933) do
+ActiveRecord::Schema.define(version: 2020_10_02_100148) do
 
   create_table "brands", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
@@ -38,13 +38,13 @@ ActiveRecord::Schema.define(version: 2020_10_03_082933) do
     t.string "name"
     t.string "email"
     t.string "password_digest"
+    t.string "zip"
     t.string "address"
     t.string "tel"
     t.integer "gender"
     t.date "born"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "zip"
   end
 
   create_table "favorites", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -72,24 +72,24 @@ ActiveRecord::Schema.define(version: 2020_10_03_082933) do
     t.bigint "customer_id"
     t.string "name"
     t.string "email"
+    t.string "zip"
     t.string "address"
     t.string "tel"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "zip"
     t.integer "status", default: 0, null: false
     t.integer "sum"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["customer_id"], name: "index_orders_on_customer_id"
   end
 
   create_table "products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.integer "price"
+    t.boolean "status", default: false, null: false
+    t.text "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "image"
-    t.boolean "status", default: false, null: false
-    t.text "description"
     t.bigint "brand_id"
     t.index ["brand_id"], name: "index_products_on_brand_id"
   end
@@ -108,16 +108,18 @@ ActiveRecord::Schema.define(version: 2020_10_03_082933) do
   create_table "staffs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "password_digest"
+    t.integer "auth"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "auth"
-    t.string "staff_id", null: false
+    t.string "staff_id"
   end
 
   create_table "stocks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "quantity", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "product_id"
+    t.index ["product_id"], name: "index_stocks_on_product_id"
   end
 
   add_foreign_key "cart_items", "carts"
@@ -130,4 +132,5 @@ ActiveRecord::Schema.define(version: 2020_10_03_082933) do
   add_foreign_key "products", "brands"
   add_foreign_key "reviews", "customers"
   add_foreign_key "reviews", "products"
+  add_foreign_key "stocks", "products"
 end

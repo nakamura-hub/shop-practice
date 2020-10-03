@@ -4,12 +4,11 @@ class CreateCustomers < ActiveRecord::Migration[5.2]
       t.string :name
       t.string :email
       t.string :password_digest
-      t.string :zip1
-      t.string :zip2
+      t.string :zip
       t.string :address
       t.string :tel
       t.integer :gender
-      t.integer :born
+      t.date :born
 
       t.timestamps
     end

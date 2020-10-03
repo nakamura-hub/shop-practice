@@ -3,7 +3,7 @@ class CreateStaffs < ActiveRecord::Migration[5.2]
     create_table :staffs do |t|
       t.string :name
       t.string :password_digest
-
+      t.integer :auth
       t.timestamps
     end
   end
