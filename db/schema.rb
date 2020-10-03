@@ -118,8 +118,6 @@ ActiveRecord::Schema.define(version: 2020_10_03_082933) do
     t.integer "quantity", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "product_id"
-    t.index ["product_id"], name: "index_stocks_on_product_id"
   end
 
   add_foreign_key "cart_items", "carts"
@@ -132,5 +130,4 @@ ActiveRecord::Schema.define(version: 2020_10_03_082933) do
   add_foreign_key "products", "brands"
   add_foreign_key "reviews", "customers"
   add_foreign_key "reviews", "products"
-  add_foreign_key "stocks", "products"
 end
