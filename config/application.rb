@@ -38,5 +38,7 @@ module ShopPractice
 
     # 今後slimを自動生成
     config.generators.template_engine = :slim
+    
+    # config.action_controller.action_on_unpermitted_parameters = :raise
   end
 end

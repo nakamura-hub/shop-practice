@@ -1,0 +1,41 @@
+.col-lg-6.offset-lg-3
+  
+  h1
+    | 商品詳細
+    
+  .card
+    .card-header
+      small
+        | 更新日時:&nbsp;&nbsp;#{@product.created_at.to_s(:datetime_jp)}
+    .card-body
+      .card-text
+        .row
+          .col-lg-6
+            dl
+              dt
+                | 商品名
+              dd.space-sm
+                = @product.name
+            dl
+              dt
+                | 価格
+              dd.space-sm
+                | ¥ #{price_tax(@product.price)}
+            dl
+              dt
+                | 商品説明
+              dd.space-sm
+                = simple_format(@product.description)
+          .col-lg-6
+            dl
+              dt
+                | 画像
+              dd.space-sm
+                -if @product.image?
+                  = image_tag @product.image.url, size: "318x180", class: 'card-img-top'
+                - else
+                  #no-img
+                     .no-img_text
+                       | 商品画像無し
+  = link_to '一覧戻る', :back, class: 'btn btn-success btn-block mt-3'
+

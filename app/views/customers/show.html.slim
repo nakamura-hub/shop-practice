@@ -1,0 +1,52 @@
+.col-lg-10.offset-lg-1
+  h2
+    | プロフィール画面
+
+  .row.space-sm
+    aside.col-sm-3.space-sm.d-none.d-lg-block
+      .card
+        .card-header
+          h3.card-title.text-center
+            | #{@customer.name}&nbsp;様
+        .card-body
+          |  <img class="rounded img-fluid" src="
+          = gravatar_url(@customer, { size: 500 })
+          | " alt=""> 
+      - if current_customer == @customer
+        = link_to "編集", edit_customer_path(@customer), class: 'btn btn-success btn-block'
+    .col-sm-7.offset-lg-1.space-sm
+      h3
+        | お客様情報
+      .row.space-sm
+        .col-lg-6
+          dl
+            dt
+              | お名前
+            dd
+              = @customer.name
+          dl
+            dt
+              | メールアドレス
+            dd
+              = @customer.email
+          dl
+            dt
+              | お届け先
+            dd
+              | 郵便番号&nbsp;&nbsp;#{@customer.zip.insert(3, "-")}
+            dd
+              | 住所&nbsp;&nbsp;#{@customer.address}
+          dl
+            dt
+              | 電話番号
+            dd
+              = @customer.tel
+        .col-lg-6.space
+          - if @customer.born.present?
+            dl
+              dt
+                | 生年月日
+              dd
+                = @customer.born
+      = link_to '注文明細', orders_customer_path(@customer), class: 'btn btn-block btn-primary'
+      = link_to "編集", edit_customer_path(@customer), class: 'btn btn-success btn-block mt-3 d-lg-none d-block'

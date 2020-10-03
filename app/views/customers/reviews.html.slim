@@ -1,0 +1,44 @@
+.col-lg-10.offset-lg-1
+  .row
+    .col-lg-4
+      h1
+        | レビュー一覧
+      small
+        = page_entries_info @reviews
+
+  - if @reviews.any?
+    .card-columns.mt-3
+      - @reviews.each do |review|
+        .card.shadow-sm
+          .card-header
+            .row
+              .col-6
+                .star-review_show
+                  span.mt-1
+                    | 評価:&nbsp;
+                  .star-rating[style="font-size: 20px; width: 100px;"]
+                    .star-rating-front[style="width: #{review.score*100/5}%;"]
+                      | ★★★★★
+                    .star-rating-back
+                      | ★★★★★
+              small.text-muted.col-6
+                | 投稿日時
+                = review.created_at.to_s(:datetime_jp)
+          .card-body
+            .card-text.mb-3[style="border-bottom: 1px solid #333;"]
+              p
+                | 商品名:&nbsp;&nbsp;#{review.product.name}
+            .card-text
+              h6
+                strong
+                  | レビュー内容
+              .media-msg
+                = simple_format(review.content.truncate(24, omission: ''))
+                - if review.content.length >= 24
+                  = link_to '...', review_path(review.id)
+            .card_footer.text-right
+              - if current_customer == review.customer
+                = link_to product_review_path(review.product_id, review.id), method: :delete, data: { confirm: "削除しますか?"}, class: 'text-danger' do
+                  i.fas.fa-trash-alt
+    .mb-3
+    = paginate @reviews

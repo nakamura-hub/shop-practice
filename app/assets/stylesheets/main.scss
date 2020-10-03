@@ -1,0 +1,386 @@
+body {
+  // background: linear-gradient(to top right, rgba(0, 191, 255, 30%), #FFF);
+}
+
+.top .jumbotron {
+  background: linear-gradient(to top right, rgba(0, 191, 255, 0.3), rgba(10, 200, 200, 0.5));
+  height: 60vh;
+  position: relative;
+}
+
+.top .text-center {
+  font-family: "Cormorant Garamond", serif;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform : translate(-50%,-50%);
+  transform : translate(-50%,-50%);
+}
+
+.space-sm {
+  padding-top: 20px;
+}
+
+.nav-tabs,
+.nav-tabs .nav-link,
+.nav-tabs .active {
+  border: none;
+  border: transparent;
+}
+
+a {
+  text-decoration: none;
+  color: #333;
+}
+
+a:hover {
+  text-decoration: none;
+  border: none;
+  color: #333;
+  opacity: 0.8;
+}
+
+.wrapper {
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 120px;
+}
+
+footer {
+  width: 100%;
+  background-color: #89c7de;
+  color: #fff;
+  text-align: center;
+  padding: 30px 0;
+
+  position: absolute;
+  bottom: 0;
+}
+
+#no-img {
+  display: inline-block;
+  position: relative;
+
+  width: 318px;
+  height: 180px;
+  border: 1px solid #333;
+  max-width: 100%;
+}
+
+.no-img_text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform : translate(-50%,-50%);
+  transform : translate(-50%,-50%);
+
+  text-align: center;
+  color: #333;
+}
+
+.card {
+  position: relative;
+}
+
+// .card-columns .card {
+//   box-shadow: 0 1px 7px rgba(0,0,0,0.2);
+// }
+
+.sold {
+  width: 0;
+  height: 0;
+  border-top: 60px solid #ea352d;
+  border-right: 60px solid transparent;
+  border-bottom: 60px solid transparent;
+  border-left: 60px solid #ea352d;
+  z-index: 9999;
+  position: absolute;
+}
+
+.sold-inner {
+  transform: rotate(-45deg);
+  font-size: 28px;
+  margin:-55px -75px 0 -65px;
+  color: #fff;
+  letter-spacing: 2px;
+  font-weight: 600;
+}
+
+#favorites a {
+  cursor: pointer;
+  color: #ea352d;
+}
+
+.required::after {
+  content: " ★ ";
+  color: #ff0000;
+}
+
+.rating-box .ratings .far,
+.rating-box .ratings .fas
+{
+  font-size: 30px;
+  color: #fc0;
+  cursor: pointer;
+}
+
+.main-rating {
+  display: flex;
+}
+
+.rating-value-display,
+#rating-value-display_end {
+  font-size: 20px;
+}
+
+.star-rating {
+  position: relative;
+  // width: 5em;
+  width: 130px;
+  height: 1em;
+  font-size: 25px;
+  // 改行されるため追加
+  white-space: nowrap
+}
+
+.star-rating-front {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  color: #fc3;
+}
+
+.star-rating-back {
+  color: #ccc;
+}
+
+.average-score-directory {
+  font-size: 16px;
+}
+
+.media-user {
+  display: flex;
+}
+
+.time-and-socre {
+  display: flex;
+  flex-direction: column;
+}
+
+.star-review_show {
+  display: flex;
+}
+
+.btn_group {
+  display: flex;
+}
+
+.table_scroll {
+  overflow: scroll;
+  white-space: nowrap;
+}
+
+#cart th{
+  color:white; /*文字色*/
+  background-color: #2196f3; /*背景色*/
+}
+
+.page-header_shadow {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+}
+
+.navbar-light {
+  color: #333;
+}
+
+
+.page-header.sticky {
+  position: fixed;
+  top: 0;
+  background-color: #fff;
+  color: #70c7ff;
+  opacity: 0.7;
+  width: 100%;
+  z-index: 90;
+  transition: all 1s;
+}
+
+.page-header.sticky .nav-link {
+  color: #70c7ff;
+}
+
+.page-header.sticky .nav-link:hover {
+  color: #70c7ff;
+  opacity: 0.5;
+}
+
+.page-header.sticky .navbar-brand {
+  color: #00BCD4;
+  text-shadow: 2px 2px #fff, 5px 5px rgba(0, 188, 212, 0.4);
+}
+
+.top_body {
+  padding: 3em;
+  h4::after {
+    content: "";
+    display: block;
+    border-bottom: 5px solid #fff;
+    max-width: 264px;
+    padding-top: 0.5em;
+  }
+  .icon {
+    text-align: center;
+    
+    p {
+      padding: 0.8em;
+    }
+    
+    .fa-sign-in-alt {
+      color: #0094ff;
+    }
+    
+    .fa-shopping-cart {
+      color: #28ff9d;
+    }
+    
+    .fa-heart {
+      color: #f9001f;
+      margin-right: 0.2em;
+    }
+    
+    .fa-star {
+      color: #ffe207;
+    }
+    
+    .fa-plus {
+      font-size: 2em;
+      margin-right: 0.2em;
+    }
+  }
+  
+  i {
+    font-size: 50px;
+    text-align: center;
+  }
+}
+
+.jumbotron {
+  margin-bottom: 0;
+  background-color: #00BFFF;
+  color: #fff;
+}
+
+.back-to-top {
+  border-radius: 10px;
+  
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  
+  display: none;
+  width: 40px;
+  height: 40px;
+  
+  background-color: #f0f0f0;
+  color: #333;
+  opacity: 0.6;
+  
+  line-height: 40px;
+  font-size: 30px;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* マウスを乗せた時に透明度を変える */
+.back-to-top:hover {
+  opacity: 1;
+  text-decoration: none;
+}
+
+
+#contextmenu li {
+  list-style: none;
+}
+
+/* ページネーション */
+.pagination > li > a {
+  border: none;
+  color: #696969;
+}
+
+/* ページ番号 */
+.pagination > .active a {
+  background: #93c9ff;
+  border-radius: 50%;
+}
+
+/* ホバー時 */
+.pagination > li > a:hover {
+  border-radius: 50%;
+}
+
+.page-item:first-child .page-link,
+.page-item:last-child .page-link {
+  border-radius: 50%;
+}
+
+.media-msg {
+  display: inline-flex;
+}
+
+
+/* デフォルトのbuttonを消す */
+.navbar button {
+  appearance: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+
+  height: 32px;
+  width: 32px;
+}
+.navbar button:focus {
+  outline: none;
+}
+
+/* toggleボタン作成 */
+.toggle-icon,
+.toggle-icon::before,
+.toggle-icon::after {
+  content: "";
+  display: block;
+
+  position: absolute;
+  height: 2px;
+  width: 30px;
+
+  background-color: #333;
+
+  transition: background-color .2s;
+}
+.toggle-icon::before,
+.toggle-icon::after {
+  top: 0;
+  left: 0;
+
+  transition: transform 0.2s;
+}
+.toggle-icon::before {
+  transform: translateY(8px);
+}
+.toggle-icon::after {
+  transform: translateY(-8px);
+}
+
+/* 開いた時(toggleボタン押下時) */
+.is-open .toggle-icon {
+  background: transparent;
+}
+.is-open .toggle-icon::before {
+  transform: rotate(45deg);
+}
+.is-open .toggle-icon::after {
+  transform: rotate(-45deg);
+}

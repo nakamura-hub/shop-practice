@@ -1,0 +1,36 @@
+nav.col-lg-2
+  .nav.nav-tabs.flex-column
+    a.nav-link.dropdown-toggle[data-toggle="collapse" data-target="#staff-menu"]
+      | スタッフ管理
+    .collapse#staff-menu
+      .nav.nav-tabs.flex-column
+        | <a href="
+        = staffs_path
+        | " class="nav-link ml-4
+        = 'active' if current_page?(staffs_path)
+        | ">スタッフ一覧</a>
+        - if current_staff.auth == 1
+          | <a href="
+          = staff_signup_path
+          | " class="nav-link ml-4
+          = 'active' if current_page?(staff_signup_path)
+          | ">スタッフ登録</a>
+    a.nav-link.dropdown-toggle[data-toggle="collapse" data-target="#product-menu"]
+      | 商品管理
+    .collapse#product-menu
+      .nav.nav-tabs.flex-column
+        | <a href="
+        = products_path
+        | " class="nav-link ml-4
+        = 'active' if current_page?(products_path)
+        | ">商品一覧</a>
+        | <a href="
+        = new_product_path
+        | " class="nav-link ml-4
+        = 'active' if current_page?(new_product_path)
+        | ">商品登録</a>
+    | <a href="
+    = orders_path
+    | " class="nav-link 
+    = 'active' if current_page?(orders_path)
+    | ">注文明細一覧</a>

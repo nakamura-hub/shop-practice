@@ -1,0 +1,34 @@
+- if logged_in?
+  .col-lg-10.offset-lg-1
+    .row
+      = render 'layouts/staff_aside'
+    
+      .col-lg-9
+        h1
+          | スタッフ一覧
+          
+        small
+          = page_entries_info @staffs
+        - if @staffs.any?
+          .table-responsive
+            table.table.table-bordered.table-hover.table-sm
+              thead.bg-light
+                tr
+                  th
+                    | スタッフID
+                  th
+                    | スタッフ名
+                  th
+              - @staffs.each do |staff|
+                tbody
+                  tr
+                    td
+                      - if staff.staff_id.present?
+                        = staff.staff_id.insert(1, '-').insert(5, '-')
+                    td
+                      = staff.name
+                    td
+                      - if current_staff.auth == 1
+                        = link_to '修正', edit_staff_path(staff), class: 'btn btn-outline-success'
+                        = link_to '削除', staff, method: :delete, class: 'btn btn-outline-danger'
+          = paginate @staffs

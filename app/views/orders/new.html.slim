@@ -1,0 +1,35 @@
+.col-lg-10.offset-1
+  .text-center
+    h2
+     | 注文情報
+    p 
+      | 注文情報を入力してください。
+
+  .row
+    .col-sm-6.offset-sm-3
+      = form_with(url: confirm_orders_path, model: @customer, local: true, method: :post) do |f|
+        = render 'layouts/error_messages', model: f.object
+        .form-group
+          = f.label :name, '名前'
+          = f.text_field :name, class: 'form-control'
+        .form-group
+          = f.label :email, 'メールアドレス'
+          = f.email_field :email, class: 'form-control'
+        h3
+        strong
+          | お届け先
+        br
+        |  郵便番号
+        .form-group.input-group
+          .input-group-prepend
+            span.input-group-text
+              | 〒
+            = f.text_field :zip, class: 'form-control', placeholder: 'ハイフン無し'
+        .form-group
+          = f.label :address, '住所'
+          = f.text_field :address, class: 'form-control'
+        .form-group
+          = f.label :tel, '電話番号'
+          = f.text_field :tel, class: 'form-control'
+        = f.submit '確認画面へ', class: 'btn btn-primary btn-block mb-3'
+      = link_to 'カートに戻る', current_cart, class: 'btn btn-success btn-block'

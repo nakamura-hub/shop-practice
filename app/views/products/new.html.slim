@@ -1,0 +1,36 @@
+- if logged_in?
+  .col-lg-10.offset-lg-1
+    .row
+      = render 'layouts/staff_aside'
+      .col-lg-10
+        h1
+          | 商品登録
+  
+        .col-sm-6
+          = form_with(model: @product, local: true) do |f|
+            = render 'layouts/error_messages', model: f.object
+            .form-group
+              = f.label :name, '名前'
+              = f.text_field :name, class: 'form-control'
+            .form-group
+              = f.label :price, '価格'
+              = f.text_field :price, class: 'form-control'
+            .form-group
+              = f.label :description, '商品説明'
+              = f.text_area :description, class: 'form-control'
+            .row
+              .form-group.col-lg-6
+                = f.fields_for :stock do |stock|
+                  = stock.label :quantity
+                  = stock.number_field :quantity, min: 1, class: 'form-control'
+              .form_group.col-lg-6
+                = f.label :brand_id
+                = f.select :brand_id, Brand.all.map{|b| [b.name, b.id]}, { include_blank: '選択してください' }, class: 'form-control'
+            .form-group
+              = f.label :image, '画像'
+              br
+              = f.file_field :image
+      
+            = f.submit '登録', class: 'btn btn-primary btn-block'
+          = link_to '一覧戻る', :back, class: 'btn btn-success mt-3'
+

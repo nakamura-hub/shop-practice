@@ -1,0 +1,13 @@
+#favorites
+  - if logged_in_customer?
+    - if current_customer.bookmark?(product)
+      = link_to product_favorites_path(product), class: 'pr-1', method: :delete, remote: true do
+        = icon('fas', 'heart')
+      = product.favorites.count
+    - else
+      = link_to product_favorites_path(product), class: 'pr-1', method: :post, remote: true do
+        = icon('far', 'heart')
+      = product.favorites.count
+  - else
+    = icon('far', 'heart')
+      = product.favorites.count

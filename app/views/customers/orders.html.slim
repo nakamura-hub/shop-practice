@@ -1,0 +1,45 @@
+.col-lg-10.offset-1.space
+  h2
+    | 注文履歴一覧
+  small
+    = page_entries_info @orders
+  .d-none.d-lg-block.space
+    .row.space-sm
+      .col-lg-2
+        | 注文日
+      .col-lg-3
+        | 配送先
+      .col-lg-2
+        | 注文商品
+      .col-lg-2
+        | 支払金額
+      .col-lg-1
+        | 状況
+      .col-lg-2
+        | 注文詳細
+  - @orders.each do |order|
+    .row.space-sm
+      .col-lg-2.space-sm
+        = order.created_at.to_s(:datetime_jp)
+      .col-lg-3.space-sm
+        = order.zip.to_s.insert(3, '-')
+        br
+        = order.address
+      .col-lg-2.space-sm
+        - sum = 0
+        - order.order_details.each do |order_detail|
+          = order_detail.product.name
+          br
+          - sum_product = price_tax(order_detail.price).to_i * order_detail.quantity
+          - sum += sum_product
+      .col-lg-2.space-sm
+        - postage = postage(sum)
+        - billling_amount = sum + postage.to_i
+        = comma_price(billling_amount.to_i)
+        | 円 
+      .col-lg-1.space-sm
+        = order_status(order.status)
+      .col-lg-2.space-sm
+        = link_to '表示する', order_details_customer_path(order), class: "btn btn-sm btn-success"
+  .mb-3
+    = paginate @orders

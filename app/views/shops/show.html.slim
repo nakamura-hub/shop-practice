@@ -1,0 +1,118 @@
+.col-lg-10.offset-lg-1
+  h1
+    | 商品情報
+  
+  .row
+    .col-lg-7
+      .card
+        .row.no-gutters
+          .col-lg-6
+            - if !@product.status || @product.stock.quantity == 0
+              .sold
+                .sold-inner
+                  | SOLD
+            -if @product.image?
+              = image_tag @product.image.url, size: "318x180", class: 'card-img-top'
+            - else
+              #no-img
+                .no-img_text
+                  | 商品画像無し
+            .average-score.mt-2.ml-3
+              .star-rating.mb-2
+                .star-rating-front[style="width: #{@product.avg_score_percentage}%;"]
+                  | ★★★★★
+                .star-rating-back
+                  | ★★★★★
+            .average-score-display.pt-2.ml-3.mb-2
+              | #{@product.avg_score}点(#{@product.reviews.count}件のレビュー)
+          .col-lg-5.ml-3.mt-2
+            h4
+              | 商品説明
+            p.pl-1.pr-3
+              = @product.description
+            
+            - if logged_in_customer?
+              button.btn.btn-success.mb-2[type="button" data-toggle="modal" data-target="#Modal"]
+                i.fas.fa-pen
+                | レビューを書く
+              #Modal.modal.fade[tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true"]
+                .modal-dialog
+                  .modal-content
+                    .modal-header
+                      h4.modal-title
+                        | レビュー画面
+                    .modal-body
+                      p
+                        |  この画面はレビュー投稿画面です。
+                        br
+                        |  レビュー投稿される方は投稿ボタンを押してください。
+                        br
+                        = render 'reviews/form', review: @review, product: @product
+                    .modal-footer
+                      button.btn.btn-default[type="button" data-dismiss="modal"]
+                        | 閉じる
+
+      table.table.table-bordered
+        thead.table-dark
+          tr
+            th
+              | 商品名
+            th
+              | 価格（税込）
+            th
+              | ご購入個数
+        tbody
+          tr
+            td
+              = @product.name
+            td
+              | ¥ #{comma_price(price_tax(@product.price))}
+            td
+              - if logged_in_customer? && @product.status && @product.stock.quantity > 0
+                = form_with(url: cart_in_path, local: true) do | form |
+                  = form.number_field :quantity, value:1 , min:1, max:"#{@product.stock.quantity}", class: 'mr-2'
+                  | 個
+                  = hidden_field_tag :product_id, @product.id
+                  = form.submit 'カートに入れる', class: 'btn btn-sm btn-success ml-5'
+              - elsif !logged_in_customer?
+                | 会員登録またはログインすると購入できます。 
+              - elsif !@product.status || @product.stock.quantity == 0
+                = product_status(@product.status, @product.stock.quantity)
+      = link_to '一覧戻る', shop_list_path, class: 'btn btn-primary mb-5'
+    .col-lg-5
+      small.ml-2
+        = page_entries_info @reviews
+      ul.list-unstyled.mt-3
+        - @reviews.each do |review|
+          li.media.mb-3
+            |  <img class="mr-2 rounded-circle" src="
+            = gravatar_url(review.customer, { size: 50 })
+            | " alt=""> 
+            .media-body
+              .media-user
+                = review.customer.name
+                small.text-muted.ml-5
+                  | 投稿日時
+                  = review.created_at.to_s(:datetime_jp)
+              .media-msg
+                = simple_format(review.content.truncate(24, omission: ''))
+                - if review.content.length >= 24
+                  = link_to '...', review_path(review.id)
+              .media-footer
+                .row
+                  .col-6
+                    .star-review_show
+                      span.mt-1
+                        | 評価:&nbsp;
+                      .star-rating[style="font-size: 20px; width: 100px;"]
+                        .star-rating-front[style="width: #{review.score*100/5}%;"]
+                          | ★★★★★
+                        .star-rating-back
+                          | ★★★★★
+                  .col-2.offset-4
+                    - if current_customer == review.customer
+                      = link_to product_review_path(review.product_id, review.id), method: :delete, data: { confirm: "削除しますか?"}, class: 'text-danger' do
+                        i.fas.fa-trash-alt
+          hr
+      = paginate @reviews
+

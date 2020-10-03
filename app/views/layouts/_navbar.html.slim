@@ -1,14 +1,47 @@
-header.mb-4
-  nav.navbar.navbar-expand-sm.navbar-dark.bg-dark
+header class="mb-3"
+  nav.navbar.navbar-expand-lg.page-header
     a.navbar-brand[href="/"]
-      | Microposts
-    button.navbar-toggler[type="button" data-toggle="collapse" data-target="#navbarSupportedContent"]
-      span.navbar-toggler-icon
-    #navbarSupportedContent.collapse.navbar-collapse.justify-content-end
+      | Shop
+    button#menu-btn.navbar-toggler[type="button" data-toggle="collapse" data-target="#navbarSupportedContent"]
+      span.toggle-icon
+    #navbarSupportedContent.collapse.navbar-collapse.justify-content-end.navbar-right.bg-right
+      ul.navbar-nav.mr-auto
+        - unless logged_in?
+          li.nav-item
+            = link_to "商品一覧へ", shop_list_path, class: 'nav-link'
       ul.navbar-nav
-        li.nav-item
-          a.nav-link[href="#"]
-            | Signup
-        li.nav-item
-          a.nav-link[href="#"]
-            | Login
+        - if logged_in?
+          = link_to 'ログアウト', logout_staff_path, method: :delete, class: 'btn btn-outline-success'
+        - else
+          - if logged_in_customer?
+            li.nav-item.mr-3.mt-1.dropdown
+              a.nav-link.dropdown-toggle[href="#" data-toggle="dropdown"]
+                | #{current_customer.name}様
+              ul.dropdown-menu.dropdown-menu-right
+                - if current_cart
+                  li.dropdown-item
+                    = link_to current_cart, class: 'nav-link' do
+                      span.badge.badge-secondary.mr-2
+                        = current_cart.cart_items.count
+                      | カートを見る
+                li.dropdown-item
+                  = link_to 'ユーザー詳細', current_customer, class: 'nav-link'
+                li.dropdown-item
+                  = link_to favorites_customer_path(current_customer), class: 'nav-link' do
+                    span.badge.badge-secondary.mr-2
+                      = current_customer.favorites.count
+                    | お気に入り一覧
+                li.dropdown-item
+                  = link_to reviews_customer_path(current_customer), class: 'nav-link' do
+                    span.badge.badge-secondary.mr-2
+                      = current_customer.reviews.count
+                    | レビュー一覧
+                li.dropdown-item
+                  = link_to '注文明細', orders_customer_path(current_customer), class: 'nav-link'
+                li.dropdown-divider
+                li.dropdown-item
+                  = link_to 'ログアウト', logout_path, method: :delete, class: 'nav-link'
+          - else
+            li.nav-item.btn-group
+              = link_to '会員登録', new_customer_path, class: 'btn btn-outline-primary'
+              = link_to 'ログイン', login_path, class: 'btn btn-outline-success'

@@ -1,18 +1,95 @@
 ja:
   activerecord:
     models:
-      mst_staff: スタッフ
+      staff:        スタッフ
+      product:      商品
+      order:        注文
+      order_detail: 注文明細
+      customer:     顧客
+      cart:         カート
+      cart_item:    カートアイテム
+      review:       レビュー
+      stock:        在庫
+      brand:        ブランド
     attributes:
-      mst_staff:
+      staff:
         id: ID
-        name: スタッフ名
-        password: パスワード
+        name:                  スタッフ名
+        password:              パスワード
         password_confirmation: パスワード（確認）
+        created_at:            登録日時
+        updated_at:            更新日時
+        staff_id:              スタッフID
+      product:
+        name:       商品名
+        price:      価格
         created_at: 登録日時
         updated_at: 更新日時
+        image:      画像
+        direction:  商品説明
+        brand_id:   ブランドID
+      order:
+        customer_id: 顧客ID
+        name:        顧客名
+        email:       メールアドレス
+        address:     住所
+        tel:         電話番号
+        created_at:  登録日時
+        updated_at:  更新日時
+        zip:         郵便番号
+      order_detail:
+        product_id: 商品ID
+        order_id:   注文ID
+        price:      価格
+        quantity:   数量
+        created_at: 登録日時
+        updated_at: 更新日時
+      customer:
+        name:                  名前
+        email:                 メールアドレス
+        password:              パスワード
+        password_confirmation: パスワード（確認）
+        address:               住所
+        tel:                   電話番号
+        gender:                性別
+        born:                  生年月日
+        created_at:            登録日時
+        updated_at:            更新日時
+        zip:                   郵便番号
+      cart:
+        created_at: 登録日時
+        updated_at: 更新日時
+      cart_item:
+        quantity:   数量
+        product_id: 商品ID
+        cart_id:    カートID
+        created_at: 登録日時
+        updated_at: 更新日時
+      review:
+        content:      コメント
+        score:        スコア
+        custmomer_id: 会員番号
+        product_id:   商品ID
+        created_at:   登録日時
+        updated_at:   更新日時
+      stock:
+        quantity:     在庫数
+        product_id:   商品ID
+        created_at:   登録日時
+        updated_at:   更新日時
+      brand:
+        name:         ブランド名
+        country:      国
+        created_at:   登録日時
+        updated_at:   更新日時
+
     errors:
       format: "%{attribute}%{message}"
       messages:
+        record_invalid: 'バリデーションに失敗しました: %{errors}'
+        restrict_dependent_destroy:
+          has_one: "%{record}が存在しているので削除できません"
+          has_many: "%{record}が存在しているので削除できません"
         blank: を入力してください
         confirmation: と%{attribute}の入力が一致しません
         empty: を入力してください
@@ -31,3 +108,27 @@ ja:
         too_long: は%{count}文字以内で入力してください
         too_short: は%{count}文字以上で入力してください
         wrong_length: は%{count}文字で入力してください
+  date:
+    formats:
+      default: "%Y/%m/%d"
+      short: "%m/%d"
+      long: "%Y年%m月%d日(%a)"
+
+    day_names: [日曜日, 月曜日, 火曜日, 水曜日, 木曜日, 金曜日, 土曜日]
+    abbr_day_names: [日, 月, 火, 水, 木, 金, 土]
+
+    month_names: [~, 1月, 2月, 3月, 4月, 5月, 6月, 7月, 8月, 9月, 10月, 11月, 12月]
+    abbr_month_names: [~, 1月, 2月, 3月, 4月, 5月, 6月, 7月, 8月, 9月, 10月, 11月, 12月]
+
+    order:
+      - :year
+      - :month
+      - :day
+
+  time:
+    formats:
+      default: "%Y/%m/%d %H:%M:%S"
+      short: "%y/%m/%d %H:%M"
+      long: "%Y年%m月%d日(%a) %H時%M分%S秒 %Z"
+    am: "午前"
+    pm: "午後"

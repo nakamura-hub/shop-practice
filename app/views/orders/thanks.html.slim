@@ -1,0 +1,98 @@
+.col-lg-6.offset-lg-3
+  h1.mb-5
+    | 購入確認画面
+  p
+    | #{@order.name}様、ご注文ありがとうございました。
+  p 
+    | #{@order.email}にメールを送らせていただきましたので確認の程よろしくお願いします。
+  p
+    | 商品の宛先は以下となっております。
+  p
+    | お届け先
+  p
+    | 〒&nbsp;#{@order.zip.insert(3, "-")}
+  p
+    | #{@order.address}
+  hr
+  p
+    | #{@order.name}様
+  
+  p
+    | この度はご注文ありがとうございました。
+
+  .d-none.d-lg-block
+    .row
+      .col-lg-3
+        h4
+          | 商品名
+      .col-lg-3
+        h4
+          | 単価（税込）
+      .col-lg-2
+        h4
+          | 数量
+      .col-lg-2
+        h4
+          | 小計
+  - sum = 0
+  - @order.order_details.each do |order_item|
+    .row.space-sm
+      .col-lg-3
+        = order_item.product.name
+      .col-lg-3
+        = comma_price(price_tax(order_item.product.price))
+        | 円
+      .col-lg-2
+        = order_item.quantity
+        | 個
+      .col-lg-2.d-none.d-lg-block
+        - sum_product = price_tax(order_item.product.price).to_i * order_item.quantity
+        = comma_price(sum_product)
+        | 円 
+        - sum += sum_product
+  .row.space-sm.mb-3
+    .col-lg-12
+      .row
+        .col-lg-3.space-sm
+          strong
+            | 送料
+        .col-lg-3.space-sm
+          p
+            - postage = postage(sum)
+            - if postage == 0
+              | 送料無料
+            - else
+              | #{postage} 円
+      .row
+        .col-lg-3.space-sm
+          strong
+            | 商品合計
+        .col-lg-3.space-sm
+          = comma_price(sum.to_i)
+          | 円 
+        .col-lg-3.space-sm
+          strong
+            | ご請求額
+        .col-lg-3.space-sm
+          - billling_amount = sum + postage.to_i
+          = comma_price(billling_amount.to_i)
+          | 円 
+  p
+    | 代金は以下の口座にお振込ください。
+    br
+    | テスト銀行&nbsp;テスト支店&nbsp;普通口座&nbsp;1234567
+    br
+    | 入金が取れ次第、梱包、発送させていただきます。
+    br
+  
+  p
+    | 〜テストショップ〜
+  
+  p
+    | ○○県xx市△△町123-456
+    br
+    | 電話番号&nbsp;&nbsp;123-4567-8900
+    br
+    | メール&nbsp;&nbsp;test@test.test
+    
+  = link_to 'ショップ一覧へ', shop_list_path, class: 'btn btn-primary btn-block'

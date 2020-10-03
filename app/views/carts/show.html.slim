@@ -1,0 +1,57 @@
+#cart
+  .col-lg-10.offset-lg-1
+    .container-fluid
+      h2
+        | カート
+      = link_to 'カートを空にする', destroy_all_carts_path, method: :delete, class: 'btn btn-danger mb-3 col-lg-2 offset-lg-10'
+  
+      small
+        strong
+          | ※ 数量変更および削除(チェック)の際は更新ボタンを押してください。
+      - sum = 0
+      = form_with(url: cart_edit_path, method: :put, local: true) do | form |
+        table.table.table-responsive-lg.table-bordered.table_scroll
+          thead.thead-light
+            tr
+              th
+                | 商品名
+              th
+                | 単価（税込）
+              th
+                | 数量
+              th
+                | 小計
+              th
+                | 削除
+          - @cart_items.each do |cart_item|
+            tbody
+              tr
+                td
+                  = link_to product_path(cart_item.product) do
+                    = image_tag cart_item.product.image.url if cart_item.product.image?
+                    = cart_item.product.name
+                td
+                  | ¥ #{comma_price(price_tax(cart_item.product.price))}
+                td
+                  = cart_item.quantity
+                  | 個
+    
+                  = fields_for 'cart_items[]', cart_item do | f |
+                    = f.number_field :quantity, value: '', min:1, max:"#{cart_item.product.stock.quantity}", class: 'ml-5'
+                td
+                  - sum_product = price_tax(cart_item.product.price).to_i * cart_item.quantity
+                  | ¥ #{comma_price(sum_product)} 円
+                  - sum += sum_product
+                td
+                  = hidden_field_tag 'check[]', nil
+                  = check_box_tag 'check[]', cart_item.id
+        table.table.table-bordered.col-lg-3.table_scroll
+          tr
+            th
+              | 合計金額
+            td
+              | ¥ #{comma_price(sum)} 円
+  
+        .btn_group
+          = form.submit '更新', class: 'btn btn-success mr-5'
+          = link_to "お手続きへ", new_order_path, class: "btn btn-primary ml-5"

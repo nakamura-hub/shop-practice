@@ -1,0 +1,28 @@
+ja:
+  views:
+    pagination:
+      # first: "&laquo; 最初"
+      # last: "最後 &raquo;"
+      # previous: "&lsaquo; 前"
+      # next: "次 &rsaquo;"
+      # truncate: "..."
+      
+      first: <i class="fas fa-angle-double-left"></i>
+      last: <i class="fas fa-angle-double-right"></i>
+      previous: <i class="fas fa-angle-left"></i>
+      next: <i class="fas fa-angle-right"></i>
+      truncate: "..."
+# ヘルパーメソッドが呼び出された時に使う
+  helpers:
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: "%{entry_name}が存在しません"
+          one: "1件の%{entry_name}が表示されています"
+          other: "%{count}件の%{entry_name}が表示されています"
+      more_pages:
+        display_entries: "全%{total}件中 %{first}&nbsp;-&nbsp;%{last}件の%{entry_name}が表示されています"
+
+# kaminariのページネーションの使い方↓
+#  <%= paginate shops %>
+#  <%= page_entries_info shops %>

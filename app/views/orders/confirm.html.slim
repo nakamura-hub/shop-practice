@@ -1,0 +1,98 @@
+.col-lg-6.offset-lg-3
+  h2.text-center
+    | 注文情報確認
+  hr
+  = form_with(model: @order, local: true) do |form|
+    .row
+      .col-lg-4
+        strong
+          | お名前
+      .col-lg-6.offset-lg-2
+        = @order.name
+    hr
+    .d-none.d-lg-block
+      .row
+        .col-lg-4
+          strong
+            | 商品名
+        .col-lg-3
+          strong
+            | 単価（税込）
+        .col-lg-2
+          strong
+            | 数量
+        .col-lg-2
+          strong
+            | 小計
+    - sum = 0
+    - current_cart.cart_items.each do |cart_item|
+      .row.space-sm
+        .col-lg-4
+          = link_to product_path(cart_item.product) do
+            = cart_item.product.name
+        .col-lg-3
+          = comma_price(price_tax(cart_item.product.price))
+          | 円
+        .col-lg-2
+          = cart_item.quantity
+          | 個
+        .col-lg-2
+          - sum_product = price_tax(cart_item.product.price).to_i * cart_item.quantity
+          = comma_price(sum_product)
+          | 円 
+          - sum += sum_product
+    hr
+    .row
+      .col-lg-12
+        .row.space-sm
+          .col-lg-3
+            strong
+              | 送料
+          .col-lg-3
+            p
+              - postage = postage(sum)
+              - if postage == 0
+                | 送料無料
+              - else
+                | #{postage} 円
+        .row.space-sm
+          .col-lg-3
+            strong
+              | 商品合計
+          .col-lg-3
+            = comma_price(sum.to_i)
+            | 円 
+        .row.space-sm
+          .col-lg-3
+            strong
+              | ご請求額
+          .col-lg-3
+            - billling_amount = sum + postage.to_i
+            = comma_price(billling_amount.to_i)
+            | 円
+    hr
+      .row
+        .col-lg-2
+          strong
+            | 支払方法
+        .col-lg-4
+          p
+            | 銀行振り込み
+    hr
+      .row.space-sm
+        .col-lg-2
+          strong
+            | お届け先
+        .col-lg-4
+          p
+            | 〒&nbsp;#{@order.zip.to_s.insert(3, '-')}
+          p
+            = @order.address
+    = form.hidden_field :name
+    = form.hidden_field :email
+    = form.hidden_field :zip
+    = form.hidden_field :address
+    = form.hidden_field :tel
+    = form.hidden_field :customer_id
+    = form.submit "確定", class: "btn btn-danger btn-block mb-3 mt-3"
+    = link_to '注文情報画面へ戻る', :back, class: 'btn btn-success btn-block'

@@ -1,0 +1,101 @@
+.col-lg-10.offset-1.space
+  .row
+    h2
+      | 注文履歴詳細
+  .row
+    .col-lg-7
+      .row.space-sm
+        h3
+          | 注文情報
+      .row
+        .container
+          .row.space-sm
+            .col-lg-3
+              strong
+                | 注文日
+            .col-lg-9
+              = @order.created_at.to_s(:datetime_jp)
+          .row.space-sm
+            .col-lg-3
+              strong
+                | 配送先
+            .col-lg-9
+              = @order.zip.to_s.insert(3, '-')
+              br
+              = @order.address
+          .row.space-sm
+            .col-lg-3
+              strong
+                | 支払方法
+            .col-lg-9
+               | 銀行振り込み
+          .row.space-sm
+            .col-lg-3
+              strong
+                | 状況
+            .col-lg-9
+              = order_status(@order.status)
+      .row.space-sm
+        h3
+          | 注文内容
+      .d-none.d-lg-block
+        .row
+          .col-lg-4
+            strong
+              | 商品
+          .col-lg-3
+            strong
+              | 単価（税込）
+          .col-lg-2
+            strong
+              | 個数
+          .col-lg-2
+            strong
+              | 小計
+      - sum = 0
+      - @order.order_details.each do |order_detail|
+        .row.space-sm
+          .col-lg-4
+            = order_detail.product.name
+          .col-lg-3
+            = price_tax(order_detail.price)
+            | 円
+          .col-lg-2
+            = order_detail.quantity
+            | 個 
+          .col-lg-2.d-none.d-lg-block
+            = sub_total = price_tax(order_detail.price).to_i * order_detail.quantity
+            | 円 
+            - sum += sub_total
+    .col-lg-5
+      .row.space-sm
+        h3
+          | 請求情報
+      .row
+        .container
+          .row.space-sm
+            .col-lg-6
+              strong
+                | 商品合計
+            .col-6
+              = sum
+              | 円 
+          .row.space-sm
+            .col-lg-6
+              strong
+                | 配送料
+            .col-lg-6
+              - postage = postage(sum)
+              - if postage == 0
+                | 無料
+              - else
+                | #{postage} 円
+          .row.space-sm
+            .col-lg-6
+              strong
+                | ご請求額
+            .col-lg-6
+              - billling_amount = sum + postage.to_i
+              = comma_price(billling_amount.to_i)
+              | 円
+  = link_to '注文明細一覧へ戻る', :back, class: 'btn btn-success mt-3'

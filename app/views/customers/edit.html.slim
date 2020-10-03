@@ -1,0 +1,75 @@
+.col-lg-10.offset-lg-1
+  .text-center
+    h1
+      | 会員登録
+  .row
+    .col-lg-6.offset-lg-3
+      = form_with(model: @customer, local: true) do |f|
+        = render 'layouts/error_messages', model: f.object
+        .form-group
+          = f.label :name, '名前', class: 'required'
+          = f.text_field :name, class: 'form-control', required: true
+        .form-group
+          = f.label :email, 'メールアドレス', class: 'required'
+          = f.email_field :email, class: 'form-control', required: true
+        h3
+        strong.required
+          | お届け先
+        br
+        |  郵便番号
+        .form-group.input-group
+          .input-group-prepend
+            span.input-group-text
+              | 〒
+            = f.text_field :zip, class: 'form-control', placeholder: 'ハイフン無し', required: true
+        .form-group
+          = f.label :address, '住所'
+          = f.text_field :address, class: 'form-control', required: true
+  
+        .form-group
+          = f.label :tel, '電話番号', class: 'required'
+          = f.text_field :tel, class: 'form-control', required: true
+  
+        .form-group
+          = f.label :password, 'パスワード'
+          = f.password_field :password, class: 'form-control'
+        .form-group
+          = f.label :password_confirmation, 'パスワード確認'
+          = f.password_field :password_confirmation, class: 'form-control'
+        .form-group
+          = f.label :gender, '性別', class:'form-label'
+          = f.select :gender, [["女性","女性"], ["男性","男性"]] , { include_blank: true, selected: 1 }, class: 'form-control'
+        .form-group
+          = f.label :born, '生年月日', class:'form-label mr-3'
+          = f.date_select :born, prefix: 'born', use_month_numbers: true, start_year: 1930, end_year: (Time.now.year - 10), default: Date.new(1989, 1, 1)
+        .btn-group.btn-block.mb-3
+          = f.submit '登録', class: 'btn btn-primary'
+          = link_to 'プロフィールへ戻る', :back, class: 'btn btn-success'
+        
+        .attention
+          p
+            | ※「
+            span.required
+            | 」の付いている項目は、必須項目です。
+            
+      button.btn.btn-danger.btn-block.justify-content-end[type="button" data-toggle="modal" data-target="#Modal"]
+        | 退会
+      #Modal.modal.fade[tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true"]
+        .modal-dialog
+          .modal-content
+            .modal-header
+              h4.modal-title
+                | お客様退会確認画面
+            .modal-body
+              p
+                |  この画面は退会確認画面です。
+                br
+                |  退会をされる方は確定ボタンを押してください。
+                br
+                small.text-muted
+                  | ※尚、投稿されたレビューは全て削除されます。
+            .modal-footer
+              button.btn.btn-default[type="button" data-dismiss="modal"]
+                | 閉じる
+              = link_to '確定', @customer, method: :delete, class: 'btn btn-primary'
+      

@@ -17,7 +17,7 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'mini_racer', platforms: :ruby
 
 # Use CoffeeScript for .coffee assets and views
-gem 'coffee-rails', '~> 4.2'
+# gem 'coffee-rails', '~> 4.2'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -64,3 +64,23 @@ gem 'kaminari'
 
 # デバッグ用
 gem 'pry-byebug', group: :development
+
+# 画像投稿
+gem 'carrierwave'
+
+# 検索機能
+# gem 'ransack'
+
+gem 'font-awesome-sass'
+
+gem "jquery-rails"
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.6'
+  gem "factory_bot_rails"
+  # Capybara本体
+  gem 'capybara'
+  # Capybaraが利用するドライバを任意に追加する
+  gem 'webdrivers'
+  # gem 'capybara-webkit'
+end

@@ -1,0 +1,82 @@
+- if logged_in?
+  .col-lg-10.offset-lg-1#product_main[onContextmenu="return false;"]
+    .row
+      = render 'layouts/staff_aside'
+      .col-lg-10
+        h1
+          | 商品一覧
+        
+        small
+          = page_entries_info @products
+          .text-right
+            | ※右クリックでMenuが見れます。
+        - if @products.any?
+          = form_with(url: stock_path, method: :put, local: true) do |f|
+            .table-responsive.table_scroll
+              table.table.table-bordered.table-hover.table-sm
+                thead.bg-light
+                  tr
+                    th
+                      | 商品名
+                    th
+                      | 価格
+                    th
+                      | ステータス
+                    th
+                      | ブランド名
+                    th
+                      | 在庫
+                    th
+                - @products.each do |product|
+                  tbody
+                    tr
+                      td
+                        = product.name
+                      td
+                        | ¥ #{comma_price(product.price)}
+                      td
+                        = product_status(product.status, product.stock.quantity)
+                      td
+                        - if product.brand_id.nil?
+                          | ノーブランド
+                        - else
+                          = product.brand.name
+                      td
+                        .row
+                          .col-lg-3
+                            - if product.stock.present?
+                              | #{product.stock.quantity} 個
+                            - else
+                              | 0 個
+                          .col-lg-3
+                            = fields_for 'stock_items[]', product do |stock|
+                              = stock.number_field :quantity, value: '', min: 0, max: 10000, class: 'ml-5'
+                      td
+                        = link_to '詳細', product_path(product), class: 'btn btn-outline-primary'
+                        = link_to '修正', edit_product_path(product), class: 'btn btn-outline-success'
+                        = link_to '削除', product, method: :delete, class: 'btn btn-outline-danger'
+            = f.submit '在庫一括更新', class: 'btn btn-sm btn-success mb-3'
+
+          = paginate @products
+
+          #contextmenu
+              #Modal.modal.fade[tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true"]
+                .modal-dialog
+                  .modal-content
+                    .modal-header
+                      h4.modal-title
+                        | メニュー
+                        small.pl-3
+                          | (右クリックが制御されています。)
+                    .modal-body
+                      p
+                        |  [インポート]を選択される方は
+                        br
+                         | ファイル選択後押下してください。
+                        br
+                          = form_with(url: import_products_path, local: true) do | form |
+                            = form.file_field :file, accept: '.csv'
+                            = form.submit "インポート", class: 'btn btn-primary'
+                    .modal-footer
+                      button.btn.btn-default[type="button" data-dismiss="modal"]
+                        | 閉じる

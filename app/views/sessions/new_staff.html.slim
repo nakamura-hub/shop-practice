@@ -1,0 +1,13 @@
+.text-center
+  h1
+    | スタッフログイン
+.row
+  .col-sm-6.offset-sm-3
+    = form_with(url: login_staff_path, scope: :session, local: true) do |f|
+      .form-group
+        = f.label :staff_id, 'スタッフID'
+        = f.text_field :staff_id, class: 'form-control', placeholder: 'ハイフン無しでお願いします。'
+      .form-group
+        = f.label :password, 'パスワード'
+        = f.password_field :password, class: 'form-control'
+      = f.submit 'ログイン', class: 'btn btn-primary btn-block'
