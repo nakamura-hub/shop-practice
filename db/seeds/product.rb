@@ -1,7 +1,6 @@
 Product.create!(
   [
     {
-      id: 1,
       name: 'イチゴ',
       price: 500,
       status: true,
@@ -10,7 +9,6 @@ Product.create!(
     },
 
     {
-      id: 2,
       name: 'ぶどう',
       price: 260,
       status: true,
@@ -19,7 +17,6 @@ Product.create!(
     },
 
     {
-      id: 3,
       name: 'メロン',
       price: 800,
       status: true,
@@ -28,7 +25,6 @@ Product.create!(
     },
 
     {
-      id: 4,
       name: 'スイカ',
       price: 700,
       status: true,
@@ -37,7 +33,6 @@ Product.create!(
     },
 
     {
-      id: 5,
       name: 'りんご',
       price: 200,
       status: true,
@@ -46,7 +41,6 @@ Product.create!(
     },
 
     {
-      id: 6,
       name: 'もも',
       price: 300,
       status: true,
@@ -55,7 +49,6 @@ Product.create!(
     },
 
     {
-      id: 7,
       name: 'みかん',
       price: 230,
       status: true,
@@ -64,7 +57,6 @@ Product.create!(
     },
 
     {
-      id: 8,
       name: 'バナナ',
       price: 200,
       status: true,
@@ -74,7 +66,6 @@ Product.create!(
 
 
     {
-      id: 9,
       name: 'アスパラ',
       price: 180,
       status: true,
@@ -82,7 +73,6 @@ Product.create!(
     },
 
     {
-      id: 10,
       name: 'なすび',
       price: 270,
       status: false,
@@ -90,7 +80,6 @@ Product.create!(
     },
 
     {
-      id: 11,
       name: 'レタス',
       price: 150,
       status: false,
